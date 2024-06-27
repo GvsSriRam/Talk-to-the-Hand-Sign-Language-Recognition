@@ -1,2 +1,4 @@
 backend/data/ASL_Alphabet_Dataset
 sign-lang-env/
+backend/tflogs/
+*.keras
