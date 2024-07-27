@@ -44,4 +44,5 @@ RUN pip install  -r requirements.txt
 #CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
 
 #CMD exec gunicorn -k uvicorn.workers.UvicornWorker --bind "0.0.0.0:8080" --workers 2 --threads 8  --timeout 0 --log-level debug app:app --reload 
+WORKDIR "/scripts"
 ENTRYPOINT [ "python", "app.py" ]

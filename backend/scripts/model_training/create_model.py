@@ -82,7 +82,7 @@ class ASLModel:
         y_pred = model.predict(x_train_relative)
         y_pred = np.argmax(y_pred, axis=1)
         y_train_labels = np.argmax(y_train_encoded, axis=1)
-        print(classification_report(y_train_labels, y_pred))
+        # print(classification_report(y_train_labels, y_pred))
         acc = accuracy_score(y_train_labels, y_pred)
 
         return acc

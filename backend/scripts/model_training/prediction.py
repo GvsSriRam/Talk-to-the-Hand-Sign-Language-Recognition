@@ -15,7 +15,7 @@ class ASLModelPrediction:
         self.encoder = encoder
 
     def predict(self, landmarks_np):
-        print(landmarks_np)
+        # print(landmarks_np)
         # landmarks_np = np.array([[landmark.x, landmark.y, landmark.z] for landmark in landmarks[0].landmark])
         landmarks_relative = get_relative_positions(np.array(landmarks_np))
         landmarks_relative = landmarks_relative.reshape(1, landmarks_relative.shape[0]*landmarks_relative.shape[1])
