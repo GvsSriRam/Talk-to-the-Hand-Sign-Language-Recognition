@@ -1,6 +1,6 @@
 # Python image to use.
 
-FROM python:3.9.6
+FROM python:3.11.0
 
 # RUN apt-get update \
 #   && apt-get install -y --no-install-recommends graphviz \
