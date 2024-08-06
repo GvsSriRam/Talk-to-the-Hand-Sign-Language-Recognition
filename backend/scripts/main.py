@@ -36,6 +36,7 @@ class Pipeline:
         logger.info("Training the model...")
         asl_model = ASLModel()
         self.model, _, _ = asl_model.model_2(x_train_relative, y_train_labels, y_train_encoded)
+        # self.model, _, _ = asl_model.model_1(x_train_relative, y_train_encoded)
         logger.info("Model trained successfully!")
         return
 

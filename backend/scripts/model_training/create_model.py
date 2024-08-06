@@ -105,5 +105,5 @@ class ASLModel:
     def model_2(self, x_train_relative, y_train_labels, y_train_encoded):
         model, rf_hist = self.create_and_train_tf_decision_trees_model(x_train_relative, y_train_labels)
         acc = self.evaluate_model(x_train_relative, y_train_encoded, model)
-        model.save('../models/model/asl_alphabet_model_2.keras')
+        model.save('../models/model/asl_alphabet_model_2', save_format="tf")
         return model, rf_hist, acc

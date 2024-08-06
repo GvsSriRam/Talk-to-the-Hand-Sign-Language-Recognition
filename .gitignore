@@ -2,7 +2,7 @@ backend/data/ASL_Alphabet_Dataset
 sign-lang-env/
 backend/tflogs/
 backend/models/model/asl_alphabet_model_2/
-frontend/node_modules/
+*/node_modules/
 
 *.DS_Store
 *.pyc
