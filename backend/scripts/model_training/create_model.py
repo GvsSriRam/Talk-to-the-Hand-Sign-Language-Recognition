@@ -11,6 +11,8 @@ import tf_keras
 import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
+from log import logger
+
 class ASLModel:
 
     def __init__(self):
@@ -100,10 +102,15 @@ class ASLModel:
                                 y_train_encoded, 
                                 model)
         model.save('../models/model/asl_alphabet_model.keras')
+        logger.info("Model saved successfully!")
         return model, history, acc
 
     def model_2(self, x_train_relative, y_train_labels, y_train_encoded):
         model, rf_hist = self.create_and_train_tf_decision_trees_model(x_train_relative, y_train_labels)
         acc = self.evaluate_model(x_train_relative, y_train_encoded, model)
-        model.save('../models/model/asl_alphabet_model_2', save_format="tf")
+        try:
+            model.save('../models/model/asl_alphabet_model_2', save_format="tf")
+            logger.info("Model saved successfully!")
+        except Exception as e:
+            logger.error(str(e))
         return model, rf_hist, acc

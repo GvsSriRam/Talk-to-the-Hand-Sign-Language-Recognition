@@ -38,13 +38,12 @@ class ExtractLandmarks:
         
         return landmarks_np
 
-    # count the number of subfolders and files in the given 
+    # count the number of subfolders and files in the given path
     def scan_files_and_folders(self, path='.'):
         files = []
         folders = []
         
-        with os.scandir(path) as entries:
-            
+        with os.scandir(path) as entries:    
             for entry in entries:
                 # print(entry.path)
                 # print(curr_label)

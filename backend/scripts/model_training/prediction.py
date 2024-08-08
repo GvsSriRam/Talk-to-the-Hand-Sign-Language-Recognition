@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 from utils import get_relative_positions
+from log import logger
 
 class ASLModelPrediction:
 
@@ -36,4 +37,5 @@ class ASLModelPrediction:
         return char[3:]
 
     def load_model(self):
-        return tf.keras.models.load_model('../models/model/asl_alphabet_model.keras')
+        return tf.keras.models.load_model('../models/model/asl_alphabet_model_2')
+        logger.info("Model loaded successfully!")
