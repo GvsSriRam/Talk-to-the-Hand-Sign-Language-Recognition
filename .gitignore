@@ -3,6 +3,8 @@ sign-lang-env/
 backend/tflogs/
 backend/models/model/asl_alphabet_model_2/
 */node_modules/
+*/.parcel-cache/
+frontend/dist
 
 *.DS_Store
 *.pyc
