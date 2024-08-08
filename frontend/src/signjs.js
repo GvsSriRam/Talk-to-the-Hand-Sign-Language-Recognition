@@ -163,6 +163,9 @@ function enableCam(event) {
   });
 }
 
+const predictionElement = document.getElementById('prediction');
+predictionElement.style.display = 'none';
+
 let lastVideoTime = -1;
 let results = undefined;
 console.log(video);
@@ -213,10 +216,17 @@ async function predictWebcam() {
 
       const res = await fetch("https://ttth-uzgq5aihvq-uc.a.run.app/ttth/pred", requestOptions)
             .then((response) => response.json())
-            // .then((result) => console.log(result))
-            // .catch((error) => console.error(error));
-      
-      console.log(res.pred);
+            .then((result) => {
+              console.log(result);
+              const predictionElement = document.getElementById('prediction');
+              if (predictionElement) {
+                predictionElement.textContent = result.pred; 
+                predictionElement.style.display = 'block';
+              } else {
+                console.error("Prediction element not found!");
+              }
+            })
+            .catch((error) => console.error(error));
       
     }
 

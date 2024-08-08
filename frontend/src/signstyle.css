@@ -97,3 +97,14 @@ footer {
 .detectOnClick img {
   width: 100%;
 }
+
+#prediction {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007f8b;
+  position: relative; 
+  margin-left: 10px; 
+  padding: 10px; 
+  border: 1px solid gray; 
+  width: 100px;
+}
