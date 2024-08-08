@@ -1,0 +1,13 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/valid-expanse-422717-r6/docker-repo/ttth-frontend', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/valid-expanse-422717-r6/docker-repo/ttth-frontend']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'ttth-frontend', '--image', 'gcr.io/valid-expanse-422717-r6/docker-repo/ttth-frontend', '--region', 'us-central1', '--allow-unauthenticated', '--memory', '4G', '--service-account', 'ttth-1@valid-expanse-422717-r6.iam.gserviceaccount.com', '--min-instances', '1', '--timeout=3000']
+images:
+- gcr.io/valid-expanse-422717-r6/docker-repo/ttth-frontend

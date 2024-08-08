@@ -1,7 +1,7 @@
 import {
   HandLandmarker,
   FilesetResolver
-} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+} from "@mediapipe/tasks-vision";
 
 const demosSection = document.getElementById("demos");
 
@@ -45,7 +45,7 @@ const createHandLandmarker = async () => {
       delegate: "GPU"
     },
     runningMode: runningMode,
-    numHands: 2
+    numHands: 1
   });
   demosSection.classList.remove("invisible");
 };
@@ -211,7 +211,7 @@ async function predictWebcam() {
         redirect: "follow"
       };
 
-      const res = await fetch("http://0.0.0.0:8000/ttth/pred", requestOptions)
+      const res = await fetch("https://ttth-uzgq5aihvq-uc.a.run.app/ttth/pred", requestOptions)
             .then((response) => response.json())
             // .then((result) => console.log(result))
             // .catch((error) => console.error(error));
