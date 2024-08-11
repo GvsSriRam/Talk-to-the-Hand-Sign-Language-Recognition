@@ -3,31 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>TTTH</title>
+  <link rel="shortcut icon" href="./imgs/favicon_io/favicon.ico">
+  <link rel="icon" href="./imgs/favicon_io/favicon.ico">
+  <link rel="icon" sizes="16x16" href="./imgs/favicon_io/favicon-16x16.png" type="image/png">
+  <link rel="icon" sizes="32x32" href="./imgs/favicon_io/favicon-32x32.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./imgs/favicon_io/apple-touch-icon.png">
+  
   <link href="./signstyle.css" rel="stylesheet">
   <script type="module" src="./signjs.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  
-  <h1>Hand landmark detection using the MediaPipe HandLandmarker task</h1>
 
-  <section id="demos" class="invisible">
-    <h2>Demo: Webcam continuous hands landmarks detection</h2>
-    <p>Hold your hand in front of your webcam to get real-time hand landmarker detection.</br>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+  <div id="icon-container">
+    <img src="./imgs/love.png" alt="Start" id="start-icon">
+  </div>
 
-    <div id="liveView" class="videoView">
-      <button id="webcamButton" class="mdc-button mdc-button--raised">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">ENABLE WEBCAM</span>
-      </button>
-      <div style="position: relative;">
-        <video id="webcam" style="position: abso" autoplay playsinline></video>
-        <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+  <div id="content" class="invisible">
+    <h1>Talk To The Hand</h1>
+
+    <section id="demos">
+      <h2 class="demo-title">Real-time Sign Language Detection</h2>
+
+      <div id="liveView" class="videoView">
+        <button id="webcamButton" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">ENABLE WEBCAM</span>
+        </button>
+        <div style="position: relative;">
+          <video id="webcam" style="position: abso" autoplay playsinline></video>
+          <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+        </div>
+        <div id="prediction"></div>
+        <div id="fullPrediction"></div>
       </div>
-      <div id="prediction"></div>
-    </div>
-  </section>
+    </section>
+  </div>
+
+  <script>
+    const iconContainer = document.getElementById('icon-container');
+    const content = document.getElementById('content');
+    const startIcon = document.getElementById('start-icon');
+
+    startIcon.addEventListener('click', () => {
+      // Smooth transition using CSS animation
+      iconContainer.classList.add('scroll-out');
+      content.classList.remove('invisible');
+
+      // After animation, remove the icon completely and scroll to the content
+      setTimeout(() => {
+        iconContainer.classList.add('invisible');
+        content.scrollIntoView({ behavior: 'smooth' });
+      }, 500); // Adjust timeout for animation duration
+    });
+  </script>
+
 </body>
 </html>

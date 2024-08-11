@@ -10,31 +10,6 @@ let runningMode = "IMAGE";
 let enableWebcamButton;
 let webcamRunning = false;
 
-
-// Function to initialize the button (example)
-// function init() {
-//   // Get the button element from the DOM (assuming there is a button with id "enableWebcamButton")
-//   enableWebcamButton = document.getElementById('enableWebcamButton');
-  
-//   // Check if the button exists
-//   if (enableWebcamButton) {
-//     // Add an event listener to the button
-//     enableWebcamButton.addEventListener('click', function() {
-//       // Toggle the webcamRunning state
-//       webcamRunning = !webcamRunning;
-//       console.log('Webcam running:', webcamRunning);
-//     });
-//   } else {
-//     console.error('Button not found');
-//   }
-// }
-
-// // Call the init function when the window loads
-// window.onload = init;
-
-// Before we can use HandLandmarker class we must wait for it to finish
-// loading. Machine Learning models can be large and take a moment to
-// get everything needed to run.
 const createHandLandmarker = async () => {
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
@@ -52,72 +27,7 @@ const createHandLandmarker = async () => {
 createHandLandmarker();
 
 /********************************************************************
-// Demo 1: Grab a bunch of images from the page and detection them
-// upon click.
-********************************************************************/
-
-// In this demo, we have put all our clickable images in divs with the
-// CSS class 'detectionOnClick'. Lets get all the elements that have
-// this class.
-const imageContainers = document.getElementsByClassName("detectOnClick");
-
-// Now let's go through all of these and add a click event listener.
-for (let i = 0; i < imageContainers.length; i++) {
-  // Add event listener to the child element whichis the img element.
-  imageContainers[i].children[0].addEventListener("click", handleClick);
-}
-
-// When an image is clicked, let's detect it and display results!
-async function handleClick(event) {
-  if (!handLandmarker) {
-    console.log("Wait for handLandmarker to load before clicking!");
-    return;
-  }
-
-  if (runningMode === "VIDEO") {
-    runningMode = "IMAGE";
-    await handLandmarker.setOptions({ runningMode: "IMAGE" });
-  }
-  // Remove all landmarks drawed before
-  const allCanvas = event.target.parentNode.getElementsByClassName("canvas");
-  for (var i = allCanvas.length - 1; i >= 0; i--) {
-    const n = allCanvas[i];
-    n.parentNode.removeChild(n);
-  }
-
-  // We can call handLandmarker.detect as many times as we like with
-  // different image data each time. This returns a promise
-  // which we wait to complete and then call a function to
-  // print out the results of the prediction.
-  const handLandmarkerResult = handLandmarker.detect(event.target);
-  console.log(handLandmarkerResult.handednesses[0][0]);
-  const canvas = document.createElement("canvas");
-  canvas.setAttribute("class", "canvas");
-  canvas.setAttribute("width", event.target.naturalWidth + "px");
-  canvas.setAttribute("height", event.target.naturalHeight + "px");
-  canvas.style =
-    "left: 0px;" +
-    "top: 0px;" +
-    "width: " +
-    event.target.width +
-    "px;" +
-    "height: " +
-    event.target.height +
-    "px;";
-
-  event.target.parentNode.appendChild(canvas);
-  const cxt = canvas.getContext("2d");
-  for (const landmarks of handLandmarkerResult.landmarks) {
-    drawConnectors(cxt, landmarks, HAND_CONNECTIONS, {
-      color: "#00FF00",
-      lineWidth: 5
-    });
-    drawLandmarks(cxt, landmarks, { color: "#FF0000", lineWidth: 1 });
-  }
-}
-
-/********************************************************************
-// Demo 2: Continuously grab image from webcam stream and detect it.
+// Continuously grab image from webcam stream and detect it.
 ********************************************************************/
 
 const video = document.getElementById("webcam");
@@ -166,8 +76,14 @@ function enableCam(event) {
 const predictionElement = document.getElementById('prediction');
 predictionElement.style.display = 'none';
 
+const fullPredictionElement = document.getElementById('fullPrediction');
+fullPredictionElement.style.display = 'none';
+
 let lastVideoTime = -1;
 let results = undefined;
+let predictionString = ""; // Initialize a string to store predictions
+let lastPredictionTime = 0; // Track the last prediction time
+
 console.log(video);
 async function predictWebcam() {
   canvasElement.style.width = video.videoWidth;;
@@ -218,12 +134,28 @@ async function predictWebcam() {
             .then((response) => response.json())
             .then((result) => {
               console.log(result);
-              const predictionElement = document.getElementById('prediction');
               if (predictionElement) {
                 predictionElement.textContent = result.pred; 
                 predictionElement.style.display = 'block';
               } else {
                 console.error("Prediction element not found!");
+              }
+              if (fullPredictionElement && Date.now() - lastPredictionTime >= 2000) {
+                lastPredictionTime = Date.now();
+                let predChar = result.pred[3];
+
+                if (result.pred === "x0_space") {
+                  predChar = " "; // Replace with a space
+                } else if (result.pred === "x0_del" && predictionString.length > 0) {
+                  predictionString = predictionString.slice(0, -1); // Remove the last character
+                } else {
+                  predictionString += predChar; // Append the 4th character
+                }
+  
+                fullPredictionElement.textContent = predictionString; // Update the text content
+                fullPredictionElement.style.display = 'block';
+              } else {
+                console.error("FUll Prediction element not found!");
               }
             })
             .catch((error) => console.error(error));

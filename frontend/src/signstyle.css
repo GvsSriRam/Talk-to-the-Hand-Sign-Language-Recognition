@@ -108,3 +108,78 @@ footer {
   border: 1px solid gray; 
   width: 100px;
 }
+
+#fullPrediction {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007f8b;
+  position: relative; 
+  margin-left: 10px; 
+  padding: 10px; 
+  border: 1px solid gray; 
+}
+
+#icon-container {
+  position: fixed; /* Keep it in place during scrolling */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Ensure it's above the content */
+}
+
+.scroll-out {
+  animation: scrollOut 1s ease-out forwards; /* Smooth scroll out animation */
+}
+
+@keyframes scrollOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -200%); /* Move icon off-screen */
+  }
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%; /* Adjust this percentage as needed */
+  margin: 0 auto; /* Center horizontally */
+}
+
+#liveView {
+  display: flex;
+  flex-direction: column; /* Stack vertically on small screens */
+  /* justify-content: center; */
+  width: 100%; /* Adjust this percentage as needed */
+  /* max-width: 600px; /* Optional: Set a maximum width if needed */
+  margin: 20px auto;
+  align-items: center; /* Center the content horizontally within liveView */
+  
+}
+
+#liveView button {
+  margin-top: 20px; /* Add space between video and button */
+  background-color: #007f8ba4; /* Change button color */
+  color: white; /* Change text color */
+  border-radius: 50%; /* Round the button corners */
+}
+
+.demo-title {
+  text-align: center; /* Center the h2 title text */
+}
+
+/* Media Queries (Optional) */
+@media (max-width: 768px) {
+  /* Styles for screens smaller than 768px */
+  #content {
+    width: 95%; /* Take up more space on smaller screens */
+  }
+  #liveView {
+    flex-direction: column; /* Stack vertically on small screens */
+  }
+}
