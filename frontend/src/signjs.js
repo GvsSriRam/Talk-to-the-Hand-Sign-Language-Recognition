@@ -3,6 +3,24 @@ import {
   FilesetResolver
 } from "@mediapipe/tasks-vision";
 
+const iconContainer = document.getElementById('icon-container');
+const content = document.getElementById('content');
+const startIcon = document.getElementById('start-icon');
+
+startIcon.addEventListener('click', () => {
+  // Smooth transition using CSS animation
+  iconContainer.classList.add('scroll-out');
+  // content.classList.remove('invisible');
+  content.style.display = 'flex';
+
+  // After animation, remove the icon completely and scroll to the content
+  setTimeout(() => {
+    iconContainer.classList.add('invisible');
+    content.classList.add('fade-in');
+    content.scrollIntoView({ behavior: 'smooth' });
+  }, 500); // Adjust timeout for animation duration
+});
+
 const demosSection = document.getElementById("demos");
 
 let handLandmarker = undefined;
@@ -83,6 +101,14 @@ let lastVideoTime = -1;
 let results = undefined;
 let predictionString = ""; // Initialize a string to store predictions
 let lastPredictionTime = 0; // Track the last prediction time
+let timerStarted = false; // Track if the timer has started
+
+const appendButton = document.getElementById('appendButton');
+appendButton.addEventListener('click', () => {
+  // Start the timer when the button is clicked
+  timerStarted = true;
+  lastPredictionTime = Date.now(); // Set the initial time
+});
 
 console.log(video);
 async function predictWebcam() {
@@ -140,20 +166,24 @@ async function predictWebcam() {
               } else {
                 console.error("Prediction element not found!");
               }
-              if (fullPredictionElement && Date.now() - lastPredictionTime >= 2000) {
-                lastPredictionTime = Date.now();
-                let predChar = result.pred[3];
+              if (fullPredictionElement) {
+                if (Date.now() - lastPredictionTime >= 1000 && timerStarted) {
+                    lastPredictionTime = Date.now();
+                  let predChar = result.pred[3];
 
-                if (result.pred === "x0_space") {
-                  predChar = " "; // Replace with a space
-                } else if (result.pred === "x0_del" && predictionString.length > 0) {
-                  predictionString = predictionString.slice(0, -1); // Remove the last character
-                } else {
-                  predictionString += predChar; // Append the 4th character
-                }
-  
-                fullPredictionElement.textContent = predictionString; // Update the text content
-                fullPredictionElement.style.display = 'block';
+                  if (result.pred === "x0_space") {
+                    predChar = " "; // Replace with a space
+                    predictionString += predChar; // Append the space
+                  } else if (result.pred === "x0_del" && predictionString.length > 0) {
+                    predictionString = predictionString.slice(0, -1); // Remove the last character
+                  } else {
+                    predictionString += predChar; // Append the 4th character
+                  }
+                  timerStarted = false; // Stop the timer
+    
+                  fullPredictionElement.textContent = predictionString; // Update the text content
+                  fullPredictionElement.style.display = 'block';
+              }
               } else {
                 console.error("FUll Prediction element not found!");
               }
@@ -170,3 +200,75 @@ async function predictWebcam() {
     window.requestAnimationFrame(predictWebcam);
   }
 }
+
+// const spellCheckInput = fullPredictionElement;
+const spellCheckButton = document.getElementById("spell-check-button");
+const spellCheckResults = document.getElementById("spell-check-results");
+
+spellCheckButton.addEventListener("click", async () => {
+  const text = fullPredictionElement.textContent;
+  // const text = "I am Batman";
+  // console.log(text);
+
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const raw = JSON.stringify({
+    "input": text
+  });
+
+  try {
+    // Send the text to your spell check API
+    const response = await fetch("https://ttth-uzgq5aihvq-uc.a.run.app/ttth/autocorrect", {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    if (data.success) {
+      spellCheckResults.innerHTML = ""; // Clear previous results
+
+      // Display suggestions in a list
+      const suggestionsList = document.createElement("ul");
+      const listItem = document.createElement("li");
+      listItem.textContent = text;
+      listItem.addEventListener("click", () => {
+        // Highlight the selected suggestion
+        // Remove the previous highlight (if any)
+        const highlightedItem = spellCheckResults.querySelector(".highlighted");
+        if (highlightedItem) {
+          highlightedItem.classList.remove("highlighted");
+        }
+        // Add highlight to the selected item
+        listItem.classList.add("highlighted");
+      });
+      suggestionsList.appendChild(listItem);
+
+      data.output.output.forEach((suggestion) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = suggestion;
+        listItem.addEventListener("click", () => {
+          // Highlight the selected suggestion
+          // Remove the previous highlight (if any)
+          const highlightedItem = spellCheckResults.querySelector(".highlighted");
+          if (highlightedItem) {
+            highlightedItem.classList.remove("highlighted");
+          }
+          // Add highlight to the selected item
+          listItem.classList.add("highlighted");
+        });
+        suggestionsList.appendChild(listItem);
+      });
+
+      spellCheckResults.appendChild(suggestionsList);
+    } else {
+      spellCheckResults.textContent = data.error; // Display error message
+    }
+  } catch (error) {
+    console.error("Error fetching spell check results:", error);
+    spellCheckResults.textContent = "An error occurred.";
+  }
+});

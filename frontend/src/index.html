@@ -24,6 +24,8 @@
   <div id="content" class="invisible">
     <h1>Talk To The Hand</h1>
 
+    <img src="./imgs/The-complete-ASL-letter-set-with-sample-segmented-images.png" alt="ASL - Letters" id="ASLLetters">
+
     <section id="demos">
       <h2 class="demo-title">Real-time Sign Language Detection</h2>
 
@@ -37,28 +39,19 @@
           <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
         </div>
         <div id="prediction"></div>
+        <button id="appendButton">Append Result to Prediction</button>
         <div id="fullPrediction"></div>
+      </div>
+
+      <!-- Spell Check Section -->
+      <div id="spell-check-section">
+        <h2 class="demo-title">Spell Check</h2>
+        <button id="spell-check-button">Check Spelling</button>
+        <div id="spell-check-results"></div>
       </div>
     </section>
   </div>
 
-  <script>
-    const iconContainer = document.getElementById('icon-container');
-    const content = document.getElementById('content');
-    const startIcon = document.getElementById('start-icon');
-
-    startIcon.addEventListener('click', () => {
-      // Smooth transition using CSS animation
-      iconContainer.classList.add('scroll-out');
-      content.classList.remove('invisible');
-
-      // After animation, remove the icon completely and scroll to the content
-      setTimeout(() => {
-        iconContainer.classList.add('invisible');
-        content.scrollIntoView({ behavior: 'smooth' });
-      }, 500); // Adjust timeout for animation duration
-    });
-  </script>
-
 </body>
 </html>
+
