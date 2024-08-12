@@ -1,8 +1,11 @@
 from preprocessing.encode import Encoder
 from model_training.create_model import ASLModel
 from model_training.prediction import ASLModelPrediction
+from autocorrect.autocorrect import SpacyContextualSpellCheckMethod as Autocorrect
 from log import logger
 import numpy as np
+
+autocorrect = Autocorrect()
 
 class Pipeline:
 
@@ -47,6 +50,13 @@ class Pipeline:
         prediction = asl_model_prediction.predict(landmarks)
         logger.info("Predicted label: %s", prediction)
         return prediction
+    
+    def autocorrect(self, input_str: str):
+        # Autocorrect the input
+        logger.info("Autocorrecting the input...")
+        suggestions = autocorrect(input_str)
+        logger.info("Autocorrected input: %s", suggestions)
+        return suggestions
 
 if __name__ == "__main__":
     pipeline = Pipeline()

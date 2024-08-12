@@ -34,6 +34,7 @@ RUN pip3 install --upgrade pip
 
 # Install any needed packages specified in requirements.txt
 RUN pip install  -r requirements.txt
+RUN python -m spacy download en_core_web_sm
 # RUN apt-get update && apt-get install -y libgl1-mesa-glx
 # RUN apt-get update && apt-get install -y tesseract-ocr
 # ENV PATH="/opt/homebrew/bin:${PATH}"

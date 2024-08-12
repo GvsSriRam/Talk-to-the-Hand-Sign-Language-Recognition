@@ -29,3 +29,11 @@ class ModelConnector:
         except Exception as e:
             logger.error(str(e))
         return res
+
+    def autocorrect(self, input_str):
+        res = {"input": input_str, "output": None}
+        try:
+            res["output"] = obj.autocorrect(input_str)
+        except Exception as e:
+            logger.error(str(e))
+        return res

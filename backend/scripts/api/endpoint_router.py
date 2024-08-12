@@ -46,3 +46,16 @@ def prediction(params: dict):
         logger.error(str(e))
         result["error"] = str(e)
     return result
+
+@router.post("/autocorrect", tags=["split"])
+def autocorrect(params: dict):
+    result = {"success": False, "error": "", "output": ""}
+    try:
+        input_str = params["input"]
+        res = model_connector_obj.autocorrect(input_str)
+        result["output"] = res
+        result["success"] = True
+    except Exception as e:
+        logger.error(str(e))
+        result["error"] = str(e)
+    return result
