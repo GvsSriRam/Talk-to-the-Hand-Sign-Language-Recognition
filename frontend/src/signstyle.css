@@ -250,3 +250,21 @@ footer {
     flex-direction: column; /* Stack vertically on small screens */
   }
 }
+
+.team { /* Target the team container */
+  display: flex; /* Enable flexbox layout */
+  flex-wrap: wrap; /* Allow elements to wrap to the next line if needed */
+  justify-content: space-between; /* Distribute space evenly between elements */
+}
+
+.team-member { /* Target individual team member containers */
+  flex: 1 0 25%; /* Distribute space evenly across columns (adjust 25% as needed) */
+  margin-bottom: 20px; /* Add spacing between team members */
+}
+
+.team-member img.profile-pic {
+  width: 100%; /* Make image fill the width of its container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 50%; /* Circular shape */
+  margin: 10px 20px; /* Add spacing below the image */
+}
