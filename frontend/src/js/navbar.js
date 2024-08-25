@@ -19,3 +19,19 @@ $("#navbar-animmenu").on("click","li",function(e){
         "width": activeWidthNewAnimWidth + "px"
     });
 });
+
+// navbar.js
+$(document).ready(function() {
+    // ... your existing navbar animation code ...
+
+    // Handle tab switching
+    $("#navbar-animmenu li").on("click", function() {
+        // 1. Remove 'active' class from all navbar items and content sections
+        $("#navbar-animmenu li").removeClass("active");
+        $(".content").removeClass("active");
+
+        // 2. Add 'active' class to the clicked navbar item and its target content
+        $(this).addClass("active"); 
+        $($(this).data("target")).addClass("active"); 
+    });
+});

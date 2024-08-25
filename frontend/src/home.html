@@ -18,17 +18,36 @@
         <div id="navbar-animmenu">
             <ul class="show-dropdown main-navbar">
                 <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-                <li class="active">
-                    <a href="javascript:void(0);"><i class="fa-solid fa-house"></i></i>Home</a>
+                <li data-target="#home-content" class="active">
+                    <a href="javascript:void(0);"><i class="fa-solid fa-house"></i>Home</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);"><i class="fa-solid fa-hands-asl-interpreting"></i></i>Go on, Talk!!!</a>
+                <li data-target="#talk-content">
+                    <a href="javascript:void(0);"><i class="fa-solid fa-hands-asl-interpreting"></i>Go on, Talk!!!</a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);"><i class="fa-solid fa-people-group"></i></i>About Us</a>
+                <li data-target="#about-content">
+                    <a href="javascript:void(0);"><i class="fa-solid fa-people-group"></i>About Us</a>
                 </li>                
             </ul>
         </div>
+
+        <div id="content-container">
+            <div id="home-content" class="content active">
+                <h2>Welcome to Talk To The Hand!</h2>
+                <p>This is a project by Syracuse University students to recognise and translate Americal Sign Language in real-time to other languages.</p>
+            </div>
+            <div id="talk-content" class="content">
+                <h2>Go on, Talk!!!</h2>
+                <p>This is where you can talk to the hand!</p>
+            </div>
+            <div id="about-content" class="content">
+                <h2>About Us</h2>
+                <p>Learn more about our amazing team!</p>
+            </div>
+        </div>
+
     </main>
+    <footer>
+        <p>&copy; 2021 Talk To The Hand</p>
+    </footer>
     <script src="js/navbar.js"></script>
 </body>
