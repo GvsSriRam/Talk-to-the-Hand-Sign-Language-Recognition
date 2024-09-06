@@ -185,6 +185,7 @@ i {
 
 #home-content {
     height: 100%;
+    /* overflow: hidden; */
     /* background-image: url('../imgs/image.png');
     background-size: cover;
     background-repeat: no-repeat;  */

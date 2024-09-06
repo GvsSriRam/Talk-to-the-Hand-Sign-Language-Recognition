@@ -1,0 +1,47 @@
+#welcome {
+  text-align:center;
+  padding-top: 100px;
+  padding-bottom: 10px;
+}
+
+.temp {
+  display:inline-block;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.temp:first-of-type {
+  animation: showup 7s forwards;
+}
+
+.temp:last-of-type {
+  width:0px;
+  animation: reveal 7s forwards;
+}
+
+.temp:last-of-type h2 {
+  margin-left:-235px;
+  animation: slidein 7s forwards;
+}
+
+@keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:1;}
+}
+
+@keyframes slidein {
+    0% { margin-left:-800px; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:235px;}
+    /* 80% {opacity:1;} */
+    100% {opacity:1;width:235px;}
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talk To The Hand</title>
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/textReveal.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -32,8 +33,13 @@
 
         <div id="content-container">
             <div id="home-content" class="content active">
-                <h2>Welcome to Talk To The Hand!</h2>
-                <p>This is a project by Syracuse University students to recognise and translate Americal Sign Language in real-time to other languages.</p>
+                <div id="welcome">
+                    <div class="temp"><h2>Welcome</h2></div> 
+                    <div class="temp"> 
+                        <h2>to Talk To The Hand!</h2>
+                    </div>
+                </div>
+                <script src="js/textReveal.js"></script>
             </div>
             <div id="talk-content" class="content">
                 <h2>Go on, Talk!!!</h2>
